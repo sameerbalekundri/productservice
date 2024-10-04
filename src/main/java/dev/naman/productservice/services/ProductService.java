@@ -7,6 +7,7 @@ import java.util.List;
 public interface ProductService {
 
     Product getSingleProduct(Long productId);
+
     List<Product> getProducts();
 
     Product createProduct(String title,
@@ -15,4 +16,7 @@ public interface ProductService {
                           String description,
                           String image
     );
+
+//    Product getProductsByCategory(String category);
+
 }

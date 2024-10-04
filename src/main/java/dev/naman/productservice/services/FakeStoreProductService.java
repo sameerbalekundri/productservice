@@ -1,10 +1,12 @@
 package dev.naman.productservice.services;
 
 import dev.naman.productservice.dtos.FakeStoreProductDto;
+import dev.naman.productservice.dtos.FakeStoreProductsByCategoryDto;
 import dev.naman.productservice.models.Product;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Service
@@ -27,11 +29,6 @@ public class FakeStoreProductService implements ProductService {
     }
 
     @Override
-    public List<Product> getProducts() {
-        return List.of();
-    }
-
-    @Override
     public Product createProduct(String title,
                                  double price,
                                  String category,
@@ -47,10 +44,33 @@ public class FakeStoreProductService implements ProductService {
 
         FakeStoreProductDto response = restTemplate.postForObject (
                 "https://fakestoreapi.com/products",
-                    fakeStoreProductDto,
-                    FakeStoreProductDto.class
-                );
+                fakeStoreProductDto,
+                FakeStoreProductDto.class
+        );
 
         return response.toProduct();
+    }
+
+//    public List<Product> getProductsByCategory(String category) {
+//        FakeStoreProductsByCategoryDto fakeStoreProductsByCategory = restTemplate.getForObject (
+//                "https://fakestoreapi.com/products/" + category + "/",
+//                FakeStoreProductsByCategoryDto.class
+//                );
+//
+//        return fakeStoreProductsByCategory.toProductList();
+//    }
+
+    @Override
+    public List<Product> getProducts() {
+        FakeStoreProductDto[] fakeStoreProducts = restTemplate.getForObject(
+                "https://fakestoreapi.com/products",
+                FakeStoreProductDto[].class
+                );
+        List<Product> products = new ArrayList<>();
+
+        for (FakeStoreProductDto fakeStoreProductDto : fakeStoreProducts) {
+            products.add(fakeStoreProductDto.toProduct());
+        }
+        return products;
     }
 }

@@ -6,6 +6,9 @@ import dev.naman.productservice.services.ProductService;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.client.RestTemplate;
 
+import java.util.Arrays;
+import java.util.List;
+
 @RestController
 public class ProductController {
 
@@ -16,6 +19,11 @@ public class ProductController {
     public ProductController(ProductService productService, RestTemplate restTemplate) {
         this.productService = productService;
         this.restTemplate = restTemplate;
+    }
+
+    @GetMapping("/products/{id}")
+    public Product getProductDetails(@PathVariable("id") long productId) {
+        return productService.getSingleProduct(productId);
     }
 
     @PostMapping("/products")
@@ -29,14 +37,9 @@ public class ProductController {
         );
     }
 
-    @GetMapping("/products/{id}")
-    public Product getProductDetails(@PathVariable("id") long productId) {
-        return productService.getSingleProduct(productId);
-    }
-
     @GetMapping("/products")
-    public void getAllProducts() {
-
+    public List<Product> getAllProducts() {
+        return productService.getProducts();
     }
 
     public void updateProductDetails() {
