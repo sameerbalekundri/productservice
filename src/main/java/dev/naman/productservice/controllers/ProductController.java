@@ -1,24 +1,32 @@
 package dev.naman.productservice.controllers;
 
+import dev.naman.productservice.dtos.CreateProductRequestDto;
 import dev.naman.productservice.models.Product;
 import dev.naman.productservice.services.ProductService;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+import org.springframework.web.client.RestTemplate;
 
 @RestController
 public class ProductController {
 
     private ProductService productService;
 
-    public ProductController(ProductService productService) {
+    private RestTemplate restTemplate;
+
+    public ProductController(ProductService productService, RestTemplate restTemplate) {
         this.productService = productService;
+        this.restTemplate = restTemplate;
     }
 
     @PostMapping("/products")
-    public void createProduct() {
-
+    public Product createProduct(@RequestBody CreateProductRequestDto request) {
+        return productService.createProduct(
+                request.getTitle(),
+                request.getPrice(),
+                request.getCategory(),
+                request.getDescription(),
+                request.getImage()
+        );
     }
 
     @GetMapping("/products/{id}")
