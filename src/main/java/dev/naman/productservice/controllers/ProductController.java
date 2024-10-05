@@ -47,6 +47,11 @@ public class ProductController {
         return productService.getProductsByCategory(productCategory);
     }
 
+    @GetMapping("/products/categories")
+    public List<String> getAllProductCategories() {
+        return productService.getAllProductCategories();
+    }
+
     public void updateProductDetails() {
 
     }
