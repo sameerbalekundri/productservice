@@ -1,6 +1,7 @@
 package dev.naman.productservice.controllers;
 
 import dev.naman.productservice.dtos.CreateProductRequestDto;
+import dev.naman.productservice.dtos.FakeStoreProductDto;
 import dev.naman.productservice.models.Product;
 import dev.naman.productservice.services.ProductService;
 import org.springframework.web.bind.annotation.*;
@@ -52,7 +53,16 @@ public class ProductController {
         return productService.getAllProductCategories();
     }
 
-    public void updateProductDetails() {
-
+    @PutMapping("/products/{id}")
+    public Product updateProduct(@PathVariable("id") long productId,
+                                 @RequestBody FakeStoreProductDto productDto) {
+        return productService.updateProduct(
+                productId,
+                productDto.getTitle(),
+                productDto.getPrice(),
+                productDto.getDescription(),
+                productDto.getImage(),
+                productDto.getCategory()
+        );
     }
 }

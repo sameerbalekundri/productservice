@@ -8,6 +8,12 @@ import org.springframework.web.client.RestTemplate;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.springframework.http.HttpEntity;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpMethod;
+import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
+
 @Service
 public class FakeStoreProductService implements ProductService {
 
@@ -94,5 +100,36 @@ public class FakeStoreProductService implements ProductService {
         }
 
         return productCategories;
+    }
+
+    @Override
+    public Product updateProduct(Long productId,
+                                 String title,
+                                 double price,
+                                 String description,
+                                 String image,
+                                 String category) {
+
+        FakeStoreProductDto fakeStoreProductDto = new FakeStoreProductDto();
+        fakeStoreProductDto.setTitle(title);
+        fakeStoreProductDto.setPrice(price);
+        fakeStoreProductDto.setDescription(description);
+        fakeStoreProductDto.setImage(image);
+        fakeStoreProductDto.setCategory(category);
+
+        HttpHeaders headers = new HttpHeaders();
+        headers.setContentType(MediaType.APPLICATION_JSON);
+
+        HttpEntity<FakeStoreProductDto> requestEntity = new HttpEntity<>(fakeStoreProductDto, headers);
+
+        ResponseEntity<FakeStoreProductDto> responseEntity = restTemplate.exchange(
+                "https://fakestoreapi.com/products/" + productId,
+                HttpMethod.PUT,
+                requestEntity,
+                FakeStoreProductDto.class
+        );
+
+        FakeStoreProductDto updatedProductDto = responseEntity.getBody();
+        return updatedProductDto.toProduct();
     }
 }
