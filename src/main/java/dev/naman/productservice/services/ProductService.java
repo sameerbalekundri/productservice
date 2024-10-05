@@ -1,5 +1,6 @@
 package dev.naman.productservice.services;
 
+import dev.naman.productservice.models.Category;
 import dev.naman.productservice.models.Product;
 
 import java.util.List;
@@ -17,6 +18,6 @@ public interface ProductService {
                           String image
     );
 
-//    Product getProductsByCategory(String category);
+    List<Product> getProductsByCategory(String category);
 
 }
