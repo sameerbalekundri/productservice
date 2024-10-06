@@ -65,4 +65,9 @@ public class ProductController {
                 productDto.getCategory()
         );
     }
+
+    @DeleteMapping("/products/{id}")
+    public Product deleteProduct(@PathVariable("id") long productId) {
+        return productService.deleteProduct(productId);
+    }
 }

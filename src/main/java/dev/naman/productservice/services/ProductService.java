@@ -29,4 +29,6 @@ public interface ProductService {
                           String description,
                           String image
     );
+
+    Product deleteProduct(Long productId);
 }
