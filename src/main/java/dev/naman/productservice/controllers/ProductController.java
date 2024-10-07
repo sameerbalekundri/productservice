@@ -4,6 +4,7 @@ import dev.naman.productservice.dtos.CreateProductRequestDto;
 import dev.naman.productservice.dtos.FakeStoreProductDto;
 import dev.naman.productservice.models.Product;
 import dev.naman.productservice.services.ProductService;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.client.RestTemplate;
 
@@ -17,7 +18,7 @@ public class ProductController {
 
     private RestTemplate restTemplate;
 
-    public ProductController(ProductService productService, RestTemplate restTemplate) {
+    public ProductController(@Qualifier("selfProductService") ProductService productService, RestTemplate restTemplate) {
         this.productService = productService;
         this.restTemplate = restTemplate;
     }
