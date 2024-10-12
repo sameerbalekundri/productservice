@@ -19,7 +19,6 @@ public class SelfProductService implements ProductService {
         this.categoryRepository = categoryRepository;
     }
 
-
     @Override
     public Product getSingleProduct(Long productId) {
         return productRepository.findByIdIs(productId);
@@ -54,8 +53,12 @@ public class SelfProductService implements ProductService {
     }
 
     @Override
-    public List<Product> getProductsByCategory(String category) {
-        return List.of();
+    public List<Product> getProductsByCategory(String categoryTitle) {
+        Category category = categoryRepository.findByTitle(categoryTitle);
+        if (category == null) {
+            throw new IllegalArgumentException("Category not found: " + categoryTitle);
+        }
+        return productRepository.findByCategory(category);
     }
 
     @Override

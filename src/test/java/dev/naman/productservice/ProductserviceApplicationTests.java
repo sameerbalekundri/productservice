@@ -16,8 +16,8 @@ class ProductserviceApplicationTests {
 
     @Test
     void testingQueries() {
-//        productRepository.findAllByTitle("Hello");
-        productRepository.findByIdIs(1L);
+        productRepository.findAllByTitle("Hello");
+//        productRepository.findByIdIs(1L);
     }
 
 }
