@@ -6,6 +6,7 @@ import dev.naman.productservice.repositories.CategoryRepository;
 import dev.naman.productservice.repositories.ProductRepository;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Service("selfProductService")
@@ -63,7 +64,14 @@ public class SelfProductService implements ProductService {
 
     @Override
     public List<String> getAllProductCategories() {
-        return List.of();
+        List<Category> categories = categoryRepository.findAll();
+        List<String> productCategories = new ArrayList<>();
+
+        for (Category category : categories) {
+            productCategories.add(category.getTitle());
+        }
+
+        return productCategories;
     }
 
     @Override

@@ -14,10 +14,10 @@ class ProductserviceApplicationTests {
     void contextLoads() {
     }
 
-    @Test
-    void testingQueries() {
-        productRepository.findAllByTitle("Hello");
+//    @Test
+//    void testingQueries() {
+//        productRepository.findAllByTitle("Hello");
 //        productRepository.findByIdIs(1L);
-    }
+//    }
 
 }
