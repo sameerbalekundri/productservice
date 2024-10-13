@@ -75,12 +75,37 @@ public class SelfProductService implements ProductService {
     }
 
     @Override
-    public Product updateProduct(Long productId, String title, double price, String category, String description, String image) {
-        return null;
+    public Product updateProduct(Long productId,
+                                 String title,
+                                 double price,
+                                 String description,
+                                 String image,
+                                 String category) {
+
+        Product product = productRepository.findById(productId)
+                .orElseThrow(IllegalArgumentException::new);
+
+        Category categoryFromDataBase = categoryRepository.findByTitle(category);
+        if (categoryFromDataBase == null) {
+            categoryFromDataBase = new Category();
+            categoryFromDataBase.setTitle(category);
+            categoryRepository.save(categoryFromDataBase);
+        }
+
+        product.setTitle(title);
+        product.setPrice(price);
+        product.setDescription(description);
+        product.setCategory(categoryFromDataBase);
+        product.setImageUrl(image);
+
+        return productRepository.save(product);
     }
 
     @Override
     public Product deleteProduct(Long productId) {
-        return null;
+        Product product = productRepository.findById(productId)
+                .orElseThrow(IllegalArgumentException::new);
+        productRepository.delete(product);
+        return product;
     }
 }
